@@ -1,11 +1,11 @@
-/* Задача 
-Проанализировать структуру БД vk, которую мы создали на занятии, и внести предложения по усовершенствованию 
-(если такие идеи есть). Напишите пожалуйста, всё-ли понятно по структуре.
+/* Р—Р°РґР°С‡Р° 
+РџСЂРѕР°РЅР°Р»РёР·РёСЂРѕРІР°С‚СЊ СЃС‚СЂСѓРєС‚СѓСЂСѓ Р‘Р” vk, РєРѕС‚РѕСЂСѓСЋ РјС‹ СЃРѕР·РґР°Р»Рё РЅР° Р·Р°РЅСЏС‚РёРё, Рё РІРЅРµСЃС‚Рё РїСЂРµРґР»РѕР¶РµРЅРёСЏ РїРѕ СѓСЃРѕРІРµСЂС€РµРЅСЃС‚РІРѕРІР°РЅРёСЋ 
+(РµСЃР»Рё С‚Р°РєРёРµ РёРґРµРё РµСЃС‚СЊ). РќР°РїРёС€РёС‚Рµ РїРѕР¶Р°Р»СѓР№СЃС‚Р°, РІСЃС‘-Р»Рё РїРѕРЅСЏС‚РЅРѕ РїРѕ СЃС‚СЂСѓРєС‚СѓСЂРµ.
 */
 /*
-БД проанализировал, предложений пока нет
-со структорой все понятно потому что на уроке все обьяснила, что за что отвечает
-аналагичную базу на основании этой можно создать, но не аналагичную думаю возникнут сложности нужно практиковаться
+Р‘Р” РїСЂРѕР°РЅР°Р»РёР·РёСЂРѕРІР°Р», РїСЂРµРґР»РѕР¶РµРЅРёР№ РїРѕРєР° РЅРµС‚
+СЃРѕ СЃС‚СЂСѓРєС‚РѕСЂРѕР№ РІСЃРµ РїРѕРЅСЏС‚РЅРѕ РїРѕС‚РѕРјСѓ С‡С‚Рѕ РЅР° СѓСЂРѕРєРµ РІСЃРµ РѕР±СЊСЏСЃРЅРёР»Р°, С‡С‚Рѕ Р·Р° С‡С‚Рѕ РѕС‚РІРµС‡Р°РµС‚
+Р°РЅР°Р»Р°РіРёС‡РЅСѓСЋ Р±Р°Р·Сѓ РЅР° РѕСЃРЅРѕРІР°РЅРёРё СЌС‚РѕР№ РјРѕР¶РЅРѕ СЃРѕР·РґР°С‚СЊ, РЅРѕ РЅРµ Р°РЅР°Р»Р°РіРёС‡РЅСѓСЋ РґСѓРјР°СЋ РІРѕР·РЅРёРєРЅСѓС‚ СЃР»РѕР¶РЅРѕСЃС‚Рё РЅСѓР¶РЅРѕ РїСЂР°РєС‚РёРєРѕРІР°С‚СЊСЃСЏ
 */
 
 DROP DATABASE IF EXISTS vk;
@@ -16,10 +16,10 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users (
 	id SERIAL PRIMARY KEY, -- SERIAL = BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE
     firstname VARCHAR(50),
-    lastname VARCHAR(50) COMMENT 'Фамиль', -- COMMENT на случай, если имя неочевидное
+    lastname VARCHAR(50) COMMENT 'Р¤Р°РјРёР»СЊ', -- COMMENT РЅР° СЃР»СѓС‡Р°Р№, РµСЃР»Рё РёРјСЏ РЅРµРѕС‡РµРІРёРґРЅРѕРµ
     email VARCHAR(120) UNIQUE,
     phone BIGINT, 
-    INDEX users_phone_idx(phone), -- как выбирать индексы? - индексы подбираются на основании логики будуших поисков по определеному столбцу, и на этот столбез ставят индекс, для ускорения поиска
+    INDEX users_phone_idx(phone), -- РєР°Рє РІС‹Р±РёСЂР°С‚СЊ РёРЅРґРµРєСЃС‹? - РёРЅРґРµРєСЃС‹ РїРѕРґР±РёСЂР°СЋС‚СЃСЏ РЅР° РѕСЃРЅРѕРІР°РЅРёРё Р»РѕРіРёРєРё Р±СѓРґСѓС€РёС… РїРѕРёСЃРєРѕРІ РїРѕ РѕРїСЂРµРґРµР»РµРЅРѕРјСѓ СЃС‚РѕР»Р±С†Сѓ, Рё РЅР° СЌС‚РѕС‚ СЃС‚РѕР»Р±РµР· СЃС‚Р°РІСЏС‚ РёРЅРґРµРєСЃ, РґР»СЏ СѓСЃРєРѕСЂРµРЅРёСЏ РїРѕРёСЃРєР°
     INDEX users_firstname_lastname_idx(firstname, lastname)
 );
 
@@ -31,10 +31,10 @@ CREATE TABLE `profiles` (
 	photo_id BIGINT UNSIGNED NULL,
     created_at DATETIME DEFAULT NOW(),
     hometown VARCHAR(100),
-    FOREIGN KEY (user_id) REFERENCES users(id) -- что за зверь в целом? - Привязываем две таблицы по ключам,таблицу profiles по user_id и id в таблице users
-    	ON UPDATE CASCADE -- как это работает? Какие варианты? - обновление каскадным образом, то есть все вложености тоже обновляются. Каскад, запрет, установить в null, по умолчанию
-    	ON DELETE restrict -- как это работает? Какие варианты? - ограничевает удаление если есть привязка по в нешнему ключу. Каскад, запрет, установить в null, по умолчанию
-    -- , FOREIGN KEY (photo_id) REFERENCES media(id) -- пока рано, т.к. таблицы media еще нет
+    FOREIGN KEY (user_id) REFERENCES users(id) -- С‡С‚Рѕ Р·Р° Р·РІРµСЂСЊ РІ С†РµР»РѕРј? - РџСЂРёРІСЏР·С‹РІР°РµРј РґРІРµ С‚Р°Р±Р»РёС†С‹ РїРѕ РєР»СЋС‡Р°Рј,С‚Р°Р±Р»РёС†Сѓ profiles РїРѕ user_id Рё id РІ С‚Р°Р±Р»РёС†Рµ users
+    	ON UPDATE CASCADE -- РєР°Рє СЌС‚Рѕ СЂР°Р±РѕС‚Р°РµС‚? РљР°РєРёРµ РІР°СЂРёР°РЅС‚С‹? - РѕР±РЅРѕРІР»РµРЅРёРµ РєР°СЃРєР°РґРЅС‹Рј РѕР±СЂР°Р·РѕРј, С‚Рѕ РµСЃС‚СЊ РІСЃРµ РІР»РѕР¶РµРЅРѕСЃС‚Рё С‚РѕР¶Рµ РѕР±РЅРѕРІР»СЏСЋС‚СЃСЏ. РљР°СЃРєР°Рґ, Р·Р°РїСЂРµС‚, СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РІ null, РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+    	ON DELETE restrict -- РєР°Рє СЌС‚Рѕ СЂР°Р±РѕС‚Р°РµС‚? РљР°РєРёРµ РІР°СЂРёР°РЅС‚С‹? - РѕРіСЂР°РЅРёС‡РµРІР°РµС‚ СѓРґР°Р»РµРЅРёРµ РµСЃР»Рё РµСЃС‚СЊ РїСЂРёРІСЏР·РєР° РїРѕ РІ РЅРµС€РЅРµРјСѓ РєР»СЋС‡Сѓ. РљР°СЃРєР°Рґ, Р·Р°РїСЂРµС‚, СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РІ null, РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+    -- , FOREIGN KEY (photo_id) REFERENCES media(id) -- РїРѕРєР° СЂР°РЅРѕ, С‚.Рє. С‚Р°Р±Р»РёС†С‹ media РµС‰Рµ РЅРµС‚
 );
 
 DROP TABLE IF EXISTS messages;
@@ -43,7 +43,7 @@ CREATE TABLE messages (
 	from_user_id BIGINT UNSIGNED NOT NULL,
     to_user_id BIGINT UNSIGNED NOT NULL,
     body TEXT,
-    created_at DATETIME DEFAULT NOW(), -- можно будет даже не упоминать это поле при вставке
+    created_at DATETIME DEFAULT NOW(), -- РјРѕР¶РЅРѕ Р±СѓРґРµС‚ РґР°Р¶Рµ РЅРµ СѓРїРѕРјРёРЅР°С‚СЊ СЌС‚Рѕ РїРѕР»Рµ РїСЂРё РІСЃС‚Р°РІРєРµ
     INDEX messages_from_user_id (from_user_id),
     INDEX messages_to_user_id (to_user_id),
     FOREIGN KEY (from_user_id) REFERENCES users(id),
@@ -52,17 +52,17 @@ CREATE TABLE messages (
 
 DROP TABLE IF EXISTS friend_requests;
 CREATE TABLE friend_requests (
-	-- id SERIAL PRIMARY KEY, -- изменили на композитный ключ (initiator_user_id, target_user_id)
+	-- id SERIAL PRIMARY KEY, -- РёР·РјРµРЅРёР»Рё РЅР° РєРѕРјРїРѕР·РёС‚РЅС‹Р№ РєР»СЋС‡ (initiator_user_id, target_user_id)
 	initiator_user_id BIGINT UNSIGNED NOT NULL,
     target_user_id BIGINT UNSIGNED NOT NULL,
     -- `status` TINYINT UNSIGNED,
     `status` ENUM('requested', 'approved', 'unfriended', 'declined'),
-    -- `status` TINYINT UNSIGNED, -- в этом случае в коде хранили бы цифирный enum (0, 1, 2, 3...)
+    -- `status` TINYINT UNSIGNED, -- РІ СЌС‚РѕРј СЃР»СѓС‡Р°Рµ РІ РєРѕРґРµ С…СЂР°РЅРёР»Рё Р±С‹ С†РёС„РёСЂРЅС‹Р№ enum (0, 1, 2, 3...)
 	requested_at DATETIME DEFAULT NOW(),
 	confirmed_at DATETIME,
 	
     PRIMARY KEY (initiator_user_id, target_user_id),
-	INDEX (initiator_user_id), -- потому что обычно будем искать друзей конкретного пользователя
+	INDEX (initiator_user_id), -- РїРѕС‚РѕРјСѓ С‡С‚Рѕ РѕР±С‹С‡РЅРѕ Р±СѓРґРµРј РёСЃРєР°С‚СЊ РґСЂСѓР·РµР№ РєРѕРЅРєСЂРµС‚РЅРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
     INDEX (target_user_id),
     FOREIGN KEY (initiator_user_id) REFERENCES users(id),
     FOREIGN KEY (target_user_id) REFERENCES users(id)
@@ -81,7 +81,7 @@ CREATE TABLE users_communities(
 	user_id BIGINT UNSIGNED NOT NULL,
 	community_id BIGINT UNSIGNED NOT NULL,
   
-	PRIMARY KEY (user_id, community_id), -- чтобы не было 2 записей о пользователе и сообществе
+	PRIMARY KEY (user_id, community_id), -- С‡С‚РѕР±С‹ РЅРµ Р±С‹Р»Рѕ 2 Р·Р°РїРёСЃРµР№ Рѕ РїРѕР»СЊР·РѕРІР°С‚РµР»Рµ Рё СЃРѕРѕР±С‰РµСЃС‚РІРµ
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (community_id) REFERENCES communities(id)
 );
@@ -93,7 +93,7 @@ CREATE TABLE media_types(
     created_at DATETIME DEFAULT NOW(),
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 
-    -- записей мало, поэтому индекс будет лишним (замедлит работу)!
+    -- Р·Р°РїРёСЃРµР№ РјР°Р»Рѕ, РїРѕСЌС‚РѕРјСѓ РёРЅРґРµРєСЃ Р±СѓРґРµС‚ Р»РёС€РЅРёРј (Р·Р°РјРµРґР»РёС‚ СЂР°Р±РѕС‚Сѓ)!
 );
 
 DROP TABLE IF EXISTS media;
@@ -120,10 +120,10 @@ CREATE TABLE likes(
     media_id BIGINT UNSIGNED NOT NULL,
     created_at DATETIME DEFAULT NOW()
 
-    -- PRIMARY KEY (user_id, media_id) – можно было и так вместо id в качестве PK
-  	-- слишком увлекаться индексами тоже опасно, рациональнее их добавлять по мере необходимости (напр., провисают по времени какие-то запросы)  
+    -- PRIMARY KEY (user_id, media_id) вЂ“ РјРѕР¶РЅРѕ Р±С‹Р»Рѕ Рё С‚Р°Рє РІРјРµСЃС‚Рѕ id РІ РєР°С‡РµСЃС‚РІРµ PK
+  	-- СЃР»РёС€РєРѕРј СѓРІР»РµРєР°С‚СЊСЃСЏ РёРЅРґРµРєСЃР°РјРё С‚РѕР¶Рµ РѕРїР°СЃРЅРѕ, СЂР°С†РёРѕРЅР°Р»СЊРЅРµРµ РёС… РґРѕР±Р°РІР»СЏС‚СЊ РїРѕ РјРµСЂРµ РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё (РЅР°РїСЂ., РїСЂРѕРІРёСЃР°СЋС‚ РїРѕ РІСЂРµРјРµРЅРё РєР°РєРёРµ-С‚Рѕ Р·Р°РїСЂРѕСЃС‹)  
 
-/* намеренно забыли, чтобы увидеть нехватку в ER-диаграмме
+/* РЅР°РјРµСЂРµРЅРЅРѕ Р·Р°Р±С‹Р»Рё, С‡С‚РѕР±С‹ СѓРІРёРґРµС‚СЊ РЅРµС…РІР°С‚РєСѓ РІ ER-РґРёР°РіСЂР°РјРјРµ
     , FOREIGN KEY (user_id) REFERENCES users(id)
     , FOREIGN KEY (media_id) REFERENCES media(id)
 */

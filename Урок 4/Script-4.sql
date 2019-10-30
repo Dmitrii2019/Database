@@ -1,4 +1,4 @@
--- MySQL dump 10.16  Distrib 10.2.27-MariaDB, for Linux (x86_64).
+-- MySQL dump 10.16  Distrib 10.2.27-MariaDB, for Linux (x86_64)
 --
 -- Host: mysql.hostinger.ro    Database: u574849695_23
 -- ------------------------------------------------------
